@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 type IconName =
   | "home" | "trend" | "courses" | "roadmap" | "spark" | "portfolio"
@@ -58,12 +59,19 @@ const courses = [
 ];
 
 function Dashboard() {
+  const router = useRouter();
   const [active, setActive] = useState("Overview");
   const [role, setRole] = useState<"student" | "admin">("student");
   const [filter, setFilter] = useState("All");
   const [enrolled, setEnrolled] = useState<string[]>([]);
   const [shared, setShared] = useState(false);
   const nav = role === "student" ? studentNav : adminNav;
+
+  async function signOut() {
+    await fetch("/auth/signout", { method: "POST" });
+    router.replace("/login");
+    router.refresh();
+  }
 
   function changeRole(next: "student" | "admin") {
     setRole(next);
@@ -100,7 +108,7 @@ function Dashboard() {
         <header className="topbar">
           <button className="mobile-brand" onClick={() => setActive("Overview")}><span className="brand-mark">N</span> nextedge</button>
           <div className="campus"><span className="campus-mark">SU</span><span><small>Institution</small><strong>Somaiya University</strong></span></div>
-          <div className="top-actions"><span className="points"><Icon name="trophy" size={17}/> 1,280 pts</span><button className="icon-button" aria-label="Notifications"><Icon name="bell"/><i/></button></div>
+          <div className="top-actions"><span className="points"><Icon name="trophy" size={17}/> 1,280 pts</span><button className="signout-button" onClick={signOut}>Sign out</button><button className="icon-button" aria-label="Notifications"><Icon name="bell"/><i/></button></div>
         </header>
         <div className="mobile-nav">
           {nav.slice(0, 5).map(([label, icon]) => <button key={label} className={active === label ? "active" : ""} onClick={() => setActive(label)}><Icon name={icon} size={19}/><span>{label}</span></button>)}
