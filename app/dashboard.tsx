@@ -108,7 +108,7 @@ function Dashboard() {
         <header className="topbar">
           <button className="mobile-brand" onClick={() => setActive("Overview")}><span className="brand-mark">N</span> nextedge</button>
           <div className="campus"><span className="campus-mark">SU</span><span><small>Institution</small><strong>Somaiya University</strong></span></div>
-          <div className="top-actions"><span className="points"><Icon name="trophy" size={17}/> 1,280 pts</span><button className="signout-button" onClick={signOut}>Sign out</button><button className="icon-button" aria-label="Notifications"><Icon name="bell"/><i/></button></div>
+          <div className="top-actions"><span className="points"><Icon name="trophy" size={17}/> 1,280 pts</span><button className="signout-button" onClick={signOut}>Log out</button><button className="icon-button" aria-label="Notifications"><Icon name="bell"/><i/></button></div>
         </header>
         <div className="mobile-nav">
           {nav.slice(0, 5).map(([label, icon]) => <button key={label} className={active === label ? "active" : ""} onClick={() => setActive(label)}><Icon name={icon} size={19}/><span>{label}</span></button>)}
